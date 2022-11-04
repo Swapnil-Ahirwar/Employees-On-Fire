@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { EmpDetailDialogComponent } from '../emp-detail-dialog/emp-detail-dialog.component';
+import { Employee } from '../models/employee';
+import { EmployeeService } from '../service/employee.service';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-home',
@@ -9,40 +12,48 @@ import { EmpDetailDialogComponent } from '../emp-detail-dialog/emp-detail-dialog
 })
 export class HomeComponent implements OnInit {
 
+  dataSource = new MatTableDataSource<Employee>([]);
+  
   constructor(
     public dialog: MatDialog,
+    public employeeService: EmployeeService,
   ) { }
 
   ngOnInit(): void {
+    this.employeeService.fetchData().then(() => this.triggerTableChange())
   }
 
-  // defining our columns inside displayed columns variable
   displayedColumns: string[] = ['name', 'email', 'actions'];
 
-  //initializing the datasource 
-  dataSource = ELEMENT_DATA;
-
   addEmployee(): void {
-    const opendialog = this.dialog.open(EmpDetailDialogComponent, {
+    const opendialog = this.dialog.open(EmpDetailDialogComponent, { 
       width: "400px"
+    });
+
+    opendialog.afterClosed().subscribe(result => {
+      this.triggerTableChange()
     });
   }
 
-}
+  editEmployee(currentEmp: Employee) {
+    const opendialog = this.dialog.open(EmpDetailDialogComponent, { 
+      width: "400px",
+      data: { dataKey: currentEmp }
+    });
 
-export interface Employee{
-  name: string;
-  email: string;
-  actions: string;
-}
+    opendialog.afterClosed().subscribe(result => {
+      this.triggerTableChange()
+    });
+  }
 
-const ELEMENT_DATA: Employee[] = [
-  {name:'swapnil', email: 'swapnil@gmail.com', actions:''},
-  {name:'priya', email: 'priya@gmail.com', actions:''},
-  {name:'rahul', email: 'rahul@gmail.com', actions:''},
-  {name:'ritik', email: 'ritik@gmail.com', actions:''},
-  {name:'shashi', email: 'shashi@gmail.com', actions:''},
-  {name:'vivek', email: 'vivek@gmail.com', actions:''},
-  {name:'amool', email: 'amool@gmail.com', actions:''},
-  {name:'tape', email: 'tape@gmail.com', actions:''},
-]
+  deleteEmployee(id: string) {
+    this.employeeService.deleteEmployee(id)
+    this.triggerTableChange()
+
+    console.log(this.dataSource.data)
+  }
+
+  triggerTableChange() {
+    this.dataSource.data = this.employeeService.dataToPopulate
+  }
+}

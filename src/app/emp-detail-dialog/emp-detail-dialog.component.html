@@ -1,19 +1,18 @@
 <div>
-  <h2 mat-dialog-title style="text-align: left">
-    Add Employee Details
-  </h2>
+  <h2 mat-dialog-title style="text-align: left" *ngIf="addMode == true">Add Employee Details</h2>
+  <h2 mat-dialog-title style="text-align: left" *ngIf="addMode != true">Edit Employee Details</h2>
   <div mat-dialog-content>
     <mat-form-field appearance="outline" [style.width.px]=350>
         <mat-label>Name</mat-label>
-        <input matInput placeholder="Enter Name">
+        <input matInput [(ngModel)]="nameInput" placeholder="Enter Name">
       </mat-form-field>
       <mat-form-field appearance="outline" [style.width.px]=350>
         <mat-label>Email</mat-label>
-        <input matInput placeholder="Enter Email">
+        <input matInput [(ngModel)]="emailInput" placeholder="Enter Email">
       </mat-form-field>
   </div>
   <div mat-dialog-actions align="end">
     <button (click)="close()" mat-flat-button [color]="'primary'">Cancel</button>
-    <button mat-button mat-dialog-close cdkFocusInitial>OK</button>
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="onOkClick()">OK</button>
   </div>
 </div>
