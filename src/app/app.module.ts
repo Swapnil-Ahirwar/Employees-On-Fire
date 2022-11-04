@@ -15,9 +15,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { EmpDetailDialogComponent } from './emp-detail-dialog/emp-detail-dialog.component';
 import { FormsModule } from '@angular/forms';
-import { environment } from 'src/environments/environment';
 import { AngularFireModule} from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
