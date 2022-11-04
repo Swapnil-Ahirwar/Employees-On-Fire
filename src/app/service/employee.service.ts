@@ -50,7 +50,9 @@ export class EmployeeService {
   }
 
   deleteEmployee(idToRemove: string) {
-    console.log(idToRemove)
-    
+    console.log("id", idToRemove)
+    if(idToRemove !== null || idToRemove !== undefined) { 
+      this.collection.doc(idToRemove).delete();
+    }
   }
 }

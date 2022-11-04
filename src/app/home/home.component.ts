@@ -47,10 +47,9 @@ export class HomeComponent implements OnInit {
   }
 
   deleteEmployee(id: string) {
-    this.employeeService.deleteEmployee(id)
-    this.triggerTableChange()
-
+    this.employeeService.deleteEmployee(id);
     console.log(this.dataSource.data)
+    this.triggerTableChange();
   }
 
   triggerTableChange() {
