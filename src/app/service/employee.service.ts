@@ -1,58 +1,48 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Input, Output } from '@angular/core';
 import { Employee } from '../models/employee';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import {serverTimestamp } from 'firebase/firestore';
 import { first, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
   dataToPopulate: Employee[] = [];
-  collection = this.firestore.collection('test');
+  collection = this.firestore.collection<Employee>('test', ref => ref.orderBy('created'));
+  
+  isLoading : boolean = false;
 
   constructor(private firestore: AngularFirestore) {}
 
   fetchData() {
-    return new Promise<void>((resolve, reject) => {
+    this.isLoading = true
+    return new Observable((observer) => {
       this.collection.snapshotChanges().subscribe((res) => {
         this.dataToPopulate = [];
         res.forEach((it) => {
+          it.payload.doc.data()
           let document = it.payload.doc;
-          let curr: any = document.data();
-          this.dataToPopulate.push(new Employee(curr.name, curr.email, curr.id));
-          resolve();
+          this.dataToPopulate.push(document.data());
         });
+        observer.next()
       });
     });
   }
 
   addEmployee(name: string, email: string) {
-    let newEmployee = new Employee(name, email);
+    this.isLoading = true
 
-    this.collection.add(Object.assign({}, newEmployee)).then((doc) => {
-      this.collection
-        .doc(doc.id)
-        .get()
-        .pipe(first())
-        .subscribe((curr) => {
-          let data: any = curr.data();
-          this.collection
-            .doc(doc.id)
-            .set(Object.assign({}, new Employee(data.name, data.email, doc.id)))
-        });
-    });
+    let newId = this.firestore.createId()
+    let newEmployee = new Employee(newId, name, email);
+    this.collection.doc(newId).set(Object.assign({}, newEmployee, {created: serverTimestamp()}))
   }
 
   updateEmployee(idToUpdate: string, newName: string, newEmail: string) {
-    const index = this.dataToPopulate.findIndex(
-      (curr) => curr.id === idToUpdate
-    );
-    this.dataToPopulate[index].name = newName;
-    this.dataToPopulate[index].email = newEmail;
+    this.isLoading = true
+    
   }
 
   deleteEmployee(idToRemove: string) {
-    console.log("id", idToRemove)
-    if(idToRemove !== null || idToRemove !== undefined) { 
-      this.collection.doc(idToRemove).delete();
-    }
+    this.isLoading = true
+    return this.collection.doc(idToRemove).delete()
   }
 }

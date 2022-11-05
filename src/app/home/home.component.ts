@@ -13,46 +13,26 @@ import {MatTableDataSource} from '@angular/material/table';
 export class HomeComponent implements OnInit {
 
   dataSource = new MatTableDataSource<Employee>([]);
+  displayedColumns: string[] = ['name', 'email', 'actions'];
   
-  constructor(
-    public dialog: MatDialog,
-    public employeeService: EmployeeService,
-  ) { }
+  constructor(public dialog: MatDialog, public employeeService: EmployeeService) {}
 
   ngOnInit(): void {
-    this.employeeService.fetchData().then(() => this.triggerTableChange())
+    this.employeeService.fetchData().subscribe(() => this.triggerTableChange())
   }
 
-  displayedColumns: string[] = ['name', 'email', 'actions'];
-
   addEmployee(): void {
-    const opendialog = this.dialog.open(EmpDetailDialogComponent, { 
-      width: "400px"
-    });
-
-    opendialog.afterClosed().subscribe(result => {
-      this.triggerTableChange()
-    });
+    const opendialog = this.dialog.open(EmpDetailDialogComponent, { width: "400px" });
   }
 
   editEmployee(currentEmp: Employee) {
     const opendialog = this.dialog.open(EmpDetailDialogComponent, { 
-      width: "400px",
-      data: { dataKey: currentEmp }
+      width: "400px", data: { dataKey: currentEmp }
     });
-
-    opendialog.afterClosed().subscribe(result => {
-      this.triggerTableChange()
-    });
-  }
-
-  deleteEmployee(id: string) {
-    this.employeeService.deleteEmployee(id);
-    console.log(this.dataSource.data)
-    this.triggerTableChange();
   }
 
   triggerTableChange() {
     this.dataSource.data = this.employeeService.dataToPopulate
+    this.employeeService.isLoading = false
   }
 }

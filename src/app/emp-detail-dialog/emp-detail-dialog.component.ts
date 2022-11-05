@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Employee } from '../models/employee';
 import { EmployeeService } from '../service/employee.service';
@@ -28,6 +28,12 @@ export class EmpDetailDialogComponent implements OnInit {
       this.nameInput = currentEmployee.name;
       this.emailInput = currentEmployee.email;
     }
+  }
+
+  @HostListener('window:keyup.Enter', ['$event'])
+  onDialogClick(event: KeyboardEvent): void {
+    this.onOkClick()
+    this.close()
   }
 
   close(): void {

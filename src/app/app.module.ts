@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { AngularFireModule} from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { environment } from 'src/environments/environment';
     MatTableModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    MatProgressBarModule
   ],
   providers: [
     {

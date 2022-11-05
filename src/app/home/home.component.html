@@ -1,4 +1,4 @@
-
+<mat-progress-bar mode="indeterminate" [ngStyle]="{'visibility':employeeService.isLoading ? 'visible' : 'hidden'}"></mat-progress-bar>
 <div class="flex items-center flex-shrink-0 mt-2 sm:mt-0 sm:ml-4">
     <!-- Add button -->
     <span>Employee List</span>
@@ -24,7 +24,7 @@
             <button mat-icon-button color="accent" (click)="editEmployee(element)">
                 <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="primary" (click)="deleteEmployee(element.id)">
+            <button mat-icon-button color="primary" (click)="employeeService.deleteEmployee(element.id)">
                 <mat-icon>delete</mat-icon>
             </button>
         </td>
