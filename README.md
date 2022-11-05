@@ -1,27 +1,45 @@
-# AngularAssignment
+# # Employees-On-Fire
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.5.
+Employees-On-Fire lets you to do CRUD operations based.
+This is based on Firebase Firestore.
 
-## Development server
+## Features
+- It adds a new Employee data into the Firebase Store.
+- It updates the exist employee.
+- It deletes the particilar employee.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Tech
+- [AngularJS] - HTML enhanced for web apps!
+- [HTML/CSS] - Obviously!!
+- [Firebase] - Star of the show!! ✨✨
 
-## Code scaffolding
+## Installation
+Start with setting up your [Firebase]
+After doing that fork this repo and continue with IDE of your choice. 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Backend (Firebase)
+Start with
+```
+firebase init
+```
 
-## Build
+### Frontend (Angular App)
+Start with:
+```
+npm install
+```
+Followed by:
+```
+ng serve
+```
+Note: Please make sure, you have **npm**, **firestore-cli** and **angular-cli** presiding in your system.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Demo
+<a target="_blank" href="https://thinktac-assignment.web.app/">Live Demo</a>
 
-## Running unit tests
+And star this repository if found useful. 
+If there are bug/fixes, feel free to raise Issue/Pull Request.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+[AngularJS]: <https://angularjs.org/>
+[HTML/CSS]: <https://www.w3schools.com/html/html_css.asp>
+[Firebase]: <https://firebase.google.com/docs/firestore>
