@@ -14,7 +14,7 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { EmpDetailDialogComponent } from './emp-detail-dialog/emp-detail-dialog.component';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AngularFireModule} from '@angular/fire/compat'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
@@ -42,7 +42,9 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    ReactiveFormsModule
+
   ],
   providers: [
     {

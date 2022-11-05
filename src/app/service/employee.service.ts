@@ -37,7 +37,9 @@ export class EmployeeService {
   }
 
   updateEmployee(idToUpdate: string, newName: string, newEmail: string) {
-    this.isLoading = true
+    this.isLoading = true;
+    let updateEmployee = new Employee(idToUpdate, newName, newEmail);
+    this.collection.doc(idToUpdate).set(Object.assign({}, updateEmployee, {created: serverTimestamp()}));
     
   }
 
