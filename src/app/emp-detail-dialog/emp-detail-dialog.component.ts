@@ -58,12 +58,12 @@ export class EmpDetailDialogComponent implements OnInit {
     if (this.nameValidation.valid && this.emailValidation.valid) {
       if (this.addMode)
         this.employeeService.addEmployee(this.nameInput, this.emailInput);
-      else
-        this.employeeService.updateEmployee(
-          this.currEmployeeId,
-          this.nameInput,
-          this.emailInput
-        );
+      else this.employeeService.updateEmployee(
+        this.currEmployeeId,
+        this.nameInput,
+        this.emailInput
+      );
+      this.close()
     }
   }
 
